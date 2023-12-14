@@ -1,0 +1,79 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown Timer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+
+        #timer {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        button {
+            font-size: 16px;
+            margin: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Countdown Timer</h1>
+
+<div id="timer">00:00:00</div>
+
+<button onclick="startTimer()">Start</button>
+<button onclick="stopTimer()">Stop</button>
+<button onclick="resetTimer()">Reset</button>
+
+<script>
+    let timer;
+    let timeInSeconds = 300; // Initial time in seconds (5 minutes)
+
+    function updateTimerDisplay() {
+        const hours = Math.floor(timeInSeconds / 3600);
+        const minutes = Math.floor((timeInSeconds % 3600) / 60);
+        const seconds = timeInSeconds % 60;
+
+        document.getElementById('timer').innerText = `${formatTime(hours)}:${formatTime(minutes)}:${formatTime(seconds)}`;
+    }
+
+    function formatTime(time) {
+        return time < 10 ? `0${time}` : time;
+    }
+
+    function startTimer() {
+        if (!timer) {
+            timer = setInterval(function () {
+                if (timeInSeconds > 0) {
+                    timeInSeconds--;
+                    updateTimerDisplay();
+                } else {
+                    stopTimer();
+                }
+            }, 1000);
+        }
+    }
+
+    function stopTimer() {
+        clearInterval(timer);
+        timer = undefined;
+    }
+
+    function resetTimer() {
+        stopTimer();
+        timeInSeconds = 300; // Reset to the initial time (5 minutes)
+        updateTimerDisplay();
+    }
+</script>
+
+</body>
+</html>
